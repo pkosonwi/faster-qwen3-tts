@@ -21,7 +21,7 @@ def _load_model(model_id: str, device: str, dtype: str):
 
     return FasterQwen3TTS.from_pretrained(
         model_id,
-        device="cuda" if device.startswith("cuda") else device,
+        device=device,
         dtype=torch_dtype,
         attn_implementation="eager",
         max_seq_len=2048,

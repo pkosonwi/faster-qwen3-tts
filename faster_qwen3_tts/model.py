@@ -71,7 +71,7 @@ class FasterQwen3TTS:
         if isinstance(dtype, str):
             dtype = getattr(torch, dtype)
             
-        if device != "cuda" or not torch.cuda.is_available():
+        if not device.startswith("cuda") or not torch.cuda.is_available():
             raise ValueError("CUDA graphs require CUDA device")
         
         logger.info(f"Loading Qwen3-TTS model: {model_name}")
@@ -84,7 +84,7 @@ class FasterQwen3TTS:
         # Load base model using qwen-tts library
         base_model = Qwen3TTSModel.from_pretrained(
             model_name,
-            device_map="cuda:0",
+            device_map=device,
             torch_dtype=dtype,
             attn_implementation=attn_implementation,
         )
